@@ -14,6 +14,15 @@
 
 // CODE HERE...
 
+function callBinding(magicAnimals, updateAnimal, id){
+    var answer;
+    magicAnimals.forEach(animalObj => {
+      if(animalObj.id === id){
+        answer = updateAnimal.call(animalObj, 'Trogdor')
+      }
+    })
+    return answer
+  }
 
 
 // *************
@@ -29,7 +38,15 @@
 
 // CODE HERE...
 
-
+function applyBinding(magicAnimals, updateAnimal, id) {
+    var answer;
+    magicAnimals.forEach(animalObj => {
+        if(animalObj.id === id) {
+            answer = updateAnimal.apply(animalObj, ['being majestic', 'eating rainbows'])
+        }
+    })
+    return answer;
+}
 
 // *************
 // * PROBLEM 3 *
@@ -49,6 +66,21 @@ var foo;
 
 // CODE HERE...
 
+// function promiseCatcher(x) {
+//     x.then(promise => {
+//         theAnswer = promise;
+//         return promise;
+//       })
+//   }
+
+function promiseMe($q){
+    var obj = $q.defer()
+    setTimeout((resolve) => {
+    foo = 'bar'
+    obj.resolve('bar');
+    }, 20)
+    return obj.promise;
+}
 
 
 // *************
@@ -64,3 +96,18 @@ var foo;
 // and then resolve the array as you complete your promise.
 
 // CODE HERE...
+
+function emailList($q, $http){
+    var obj = $q.defer()
+    var emails = []
+    $http({
+      method: 'GET',
+      url: '/api/users'
+    }).then(function(res){
+      res.data.forEach(obj => {
+        emails.push(obj.email)
+      })
+      obj.resolve(emails)
+    })
+    return obj.promise
+  }
